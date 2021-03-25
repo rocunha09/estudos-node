@@ -28,7 +28,7 @@ User.sync({force: true});
 */
 
 //inserir dados na tabela pagamentos
-/*
+
 const Pagamento = sequelize.define('pagamentos', {
    nome:{
       type: Sequelize.STRING,
@@ -42,4 +42,3 @@ Pagamento.create({
    nome: "Energia", 
    valor: 35.86
 });
-*/

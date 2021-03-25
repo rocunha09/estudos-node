@@ -47,8 +47,8 @@ connection.query("INSERT INTO users(nome, email) VALUES ('Rafael', 'Rafael@celke
    } else {
       console.log('Erro ao cadastrar usuario');
    }
-});*/
- /*
+});
+ */
 connection.query('SELECT * FROM users', function(err, rows, fields){
    if (!err) {
       console.log('Resultado:\n', rows);
@@ -56,7 +56,7 @@ connection.query('SELECT * FROM users', function(err, rows, fields){
       console.log('Erro ao realizar consulta');
    }
 })
-*/
+
 app.get("/", function(req, res){
    //dir name pega o caminho relativo do diretório simplificando o uso na importação
    res.sendFile(__dirname + "/src/index.html");
@@ -75,4 +75,4 @@ app.get("/blog", function(req, res){
 });
 
 //localhost:8080
-app.listen(8080);
+app.listen(8081);
