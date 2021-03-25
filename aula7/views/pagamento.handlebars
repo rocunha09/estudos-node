@@ -1,1 +1,12 @@
 <h1>listar pagamento</h1>
+
+<a href="/cad-pagamento">cadastrar novo pagamento</a> <hr>
+
+{{#each pagamentos}}
+    ID: {{dataValues.id}}<br>
+    Nome: {{dataValues.nome}}<br>
+    Valor: R$ {{dataValues.valor}}<br>
+    Cadastrado: {{#formatDate createdAt}}{{/formatDate}}
+    <hr>
+{{/each}}
+
