@@ -44,4 +44,16 @@ app.post("/add-pagamento", function(req, res){
     
 });
 
+app.get("/del-pagamento/:id", function(req, res){
+    Pagamento.destroy({
+        where: {'id': req.params.id}
+    }).then(function(){
+        //res.send("Pagamento <b>apagado</b> com sucesso");
+        res.redirect("/pagamento");
+    }).catch(function(erro){
+        res.send("falha ao tentar apagar registro de pagamento: "+ erro);
+    });
+});
+
+
 app.listen(8080);
