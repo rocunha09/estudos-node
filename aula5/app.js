@@ -1,10 +1,12 @@
 const express = require("express");
 const app = express();
+app.use(express.static("public"))
+const mysql = require('mysql');
 
 //conexao db MySQL
-const mysql = require('mysql');
 const connection = mysql.createConnection({
    host     : 'localhost',
+   port     :  '3306',
    user     : 'big',
    password : '123456',
    database : 'celke'
@@ -18,6 +20,7 @@ connection.connect(function(err) {
 
 console.log('connected as id ' + connection.threadId);
 });
+
 
 /*
 connection.query("DELETE FROM users WHERE id = 2", function(err, result){
@@ -45,7 +48,7 @@ connection.query("INSERT INTO users(nome, email) VALUES ('Rafael', 'Rafael@celke
       console.log('Erro ao cadastrar usuario');
    }
 });*/
-
+ /*
 connection.query('SELECT * FROM users', function(err, rows, fields){
    if (!err) {
       console.log('Resultado:\n', rows);
@@ -53,7 +56,7 @@ connection.query('SELECT * FROM users', function(err, rows, fields){
       console.log('Erro ao realizar consulta');
    }
 })
-
+*/
 app.get("/", function(req, res){
    //dir name pega o caminho relativo do diretório simplificando o uso na importação
    res.sendFile(__dirname + "/src/index.html");
