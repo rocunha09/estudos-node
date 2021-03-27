@@ -70,7 +70,24 @@ app.put("/artigo/:id", function(req, res){
 
         return res.status(200).json({
             error: false,
-            message: "artigo esditado com sucesso com sucesso!"
+            message: "artigo editado com sucesso!"
+        });
+    });
+});
+
+//deletar artigo
+app.delete("/artigo/:id", function(req, res){
+    const artigo = Artigo.deleteOne({ _id: req.params.id}, (erro)=> {
+        if(erro){
+            return res.status(400).json({
+                error: true,
+                message: "Error: Artigo não foi deletado com sucesso! => " + erro
+            });  
+        }
+
+        return res.status(200).json({
+            error: false,
+            message: "artigo deletado com sucesso!"
         });
     });
 });
