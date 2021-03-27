@@ -1,10 +1,27 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors')
+
 require("./models/Artigo");
 const Artigo = mongoose.model('artigo'); //armazena a model Artigo
-
 const app = express();
+
 app.use(express.json());
+//criando um middleware para uso do cors
+app.use((req, res, next)=>{
+    //console.log("acesso o middleware...");
+    //neste caso ele libera qualquer lugar fazer uma requisição
+    res.header("Access-Control-Allow-Origin", "*"); 
+
+    //neste caso ele libera somente localhost:8080 fazer uma requisição
+    //res.header("Access-Control-Allow-origin", "http://localhost:8080"); 
+
+    //neste caso ele indica quais verbos podem ser usados para os clients que consumirem a API
+    res.header("Access-Control-Allow-Methods", 'GET, PUT, POST, DELETE');
+    
+    app.use(cors());
+    next();
+});
 
 mongoose.connect('mongodb://localhost/celke', {
   useNewUrlParser: true,
