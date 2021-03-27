@@ -15,6 +15,7 @@ mongoose.connect('mongodb://localhost/celke', {
     console.log("falha ao se conectar ao banco de dados: " + erro);
 });
 
+//listar artigos
 app.get("/", function(req, res){
     Artigo.find({}).then((artigo)=>{ //find poderia receber condição, mas nesse caso recebe tudo o que retornar...
         return res.json(artigo);
@@ -26,6 +27,7 @@ app.get("/", function(req, res){
     });
 });
 
+//visualizar 1 artigo
 app.get("/artigo/:id", function(req, res){
     Artigo.findOne({_id:req.params.id}).then((artigo)=>{ //find recebe o id como parametro por isso findOne
         return res.json(artigo);
@@ -37,6 +39,7 @@ app.get("/artigo/:id", function(req, res){
     });
 });
 
+//cadastrar artigo
 app.post("/artigo", function(req, res){
     //return res.json(req.body);
 
@@ -51,6 +54,23 @@ app.post("/artigo", function(req, res){
         return res.status(200).json({
             error: false,
             message: "cadastrado com sucesso!"
+        });
+    });
+});
+
+//editar artigo
+app.put("/artigo/:id", function(req, res){
+    const artigo = Artigo.updateOne({ _id: req.params.id}, req.body, (erro)=> {
+        if(erro){
+            return res.status(400).json({
+                error: true,
+                message: "Error: Artigo não foi editado com sucesso! => " + erro
+            });  
+        }
+
+        return res.status(200).json({
+            error: false,
+            message: "artigo esditado com sucesso com sucesso!"
         });
     });
 });
