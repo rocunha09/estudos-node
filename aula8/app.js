@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 require("./models/Artigo");
-const Artigo = mongoose.model('artigo');
+const Artigo = mongoose.model('artigo'); //armazena a model Artigo
 
 const app = express();
 app.use(express.json());
@@ -12,11 +12,29 @@ mongoose.connect('mongodb://localhost/celke', {
 }).then(() => {
     console.log("Conexao com MongoDB realizada com sucesso");
 }).catch((erro) => {
-    console.log("falha ao se conextar ao banco de dados: " + erro);
+    console.log("falha ao se conectar ao banco de dados: " + erro);
 });
 
 app.get("/", function(req, res){
-    return res.json({titulo: "Como criar API..."});
+    Artigo.find({}).then((artigo)=>{ //find poderia receber condição, mas nesse caso recebe tudo o que retornar...
+        return res.json(artigo);
+    }).catch((erro) => {
+        return res.status(400).json({
+            error: true,
+            message: "Error: nenhum Artigo encontrado! => " + erro
+        });
+    });
+});
+
+app.get("/artigo/:id", function(req, res){
+    Artigo.findOne({_id:req.params.id}).then((artigo)=>{ //find recebe o id como parametro por isso findOne
+        return res.json(artigo);
+    }).catch((erro) => {
+        return res.status(400).json({
+            error: true,
+            message: "Error: nenhum Artigo encontrado! => " + erro
+        });
+    });
 });
 
 app.post("/artigo", function(req, res){
@@ -26,7 +44,7 @@ app.post("/artigo", function(req, res){
         if(erro){
             return res.status(400).json({
                 error: true,
-                message: "Error: Artigo não foi cadastrado com sucesso!" + erro
+                message: "Error: Artigo não foi cadastrado com sucesso! => " + erro
             });  
         }
 
